@@ -1,0 +1,77 @@
+@charset "utf-8";
+
+#content #date {
+	font-style:italic;
+}
+
+#content img#image {
+	padding:5px;
+}
+
+
+
+
+/* AUTHOR */
+#author {
+	/* uncomment this for added box styling
+	margin:20px 0 10px 0;
+	padding:10px;
+	border:1px solid #CCC;
+	-moz-border-radius:4px;
+	border-radius:4px;
+	-moz-box-shadow:2px 2px 3px #EEE;
+	-webkit-box-shadow:2px 2px 3px #DDD;
+	box-shadow:2px 2px 3px #EEE;
+	*/
+}
+#author .image {
+	float:left;
+	width:15%;
+}
+#author .image img {
+	max-width:100%;
+}
+#author .description {
+	float:right;
+	width:82%;
+}
+#author .description h6 {
+	font-size:12px;
+	font-weight:bold;
+	margin:0;
+	padding:0;
+}
+#author .description p {
+	margin:0;
+	padding:5px 0;
+}
+#author .description p {
+	line-height:16px;
+	font-size:12px;
+}
+#author .description .profiles {
+	font-size:90%;
+}
+#author .description .profiles span {
+	display:block;
+	float:left;
+	line-height:16px;
+}
+#author .description .profiles ul {
+	margin:0;
+	padding:0;
+	float:left;
+}
+#author .description .profiles ul li {
+	margin:0 0 0 8px;
+	padding:0 0 0 8px;
+	float:left;
+	list-style:none;
+	line-height:16px;
+	border-left:1px solid #CCC;
+}
+#author .description .profiles ul li:first-child {
+	border-left:none;
+	margin:0;
+}
+

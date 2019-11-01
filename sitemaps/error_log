@@ -1,0 +1,4 @@
+[17-Nov-2014 03:51:02 America/New_York] PHP Warning:  mysqli_query() expects at least 2 parameters, 1 given in /home/opsi/public_html/sitemaps/sitemap.php on line 38
+[17-Nov-2014 03:51:02 America/New_York] PHP Warning:  mysql_fetch_array() expects parameter 1 to be resource, null given in /home/opsi/public_html/sitemaps/sitemap.php on line 54
+[17-Nov-2014 03:52:17 America/New_York] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'opsi_cart15'@'localhost' (using password: YES) in /home/opsi/public_html/sitemaps/sitemap.php on line 17
+[17-Nov-2014 03:59:56 America/New_York] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'opsi_cart15'@'localhost' (using password: YES) in /home/opsi/public_html/sitemaps/sitemap.php on line 17

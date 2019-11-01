@@ -1,0 +1,214 @@
+<modification>
+	<id>Ext Article version 1.0.8</id>
+	<version>1.0.8</version>
+	<vqmver>2.4.0</vqmver>
+	<author>lodirsen@ymail.com</author>
+	<file name="admin/controller/common/header.php">
+		<operation error="abort">
+			<search position="before">
+				<![CDATA[
+			$this->data['stores'] = array();
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+			$this->load->model('setting/extension');
+			$extensions = $this->model_setting_extension->getInstalled('module');
+			$this->data['article_installed'] = false;
+			if(in_array("article", $extensions)){
+				$this->data['article_installed'] = true;
+			}
+
+				]]>
+			</add>
+		</operation>
+		<operation error="abort">
+			<search position="after">
+				<![CDATA[
+		$this->data['text_information'] = $this->language->get('text_information');
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+		$this->language->load('catalog/article');
+		$this->data['text_article'] = $this->language->get('text_article');
+				]]>
+			</add>
+		</operation>
+		<operation error="abort">
+			<search position="after">
+				<![CDATA[
+			$this->data['information'] = $this->url->link('catalog/information', 'token=' . $this->session->data['token'], 'SSL');
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+			$this->data['article'] = $this->url->link('catalog/article', 'token=' . $this->session->data['token'], 'SSL');
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file name="admin/view/template/common/header.tpl">
+		<operation error="abort">
+			<search position="after">
+				<![CDATA[
+          <li><a href="<?php echo $information; ?>"><?php echo $text_information; ?></a></li>
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+          <?php if($article_installed): ?>
+          <li><a href="<?php echo $article; ?>"><?php echo $text_article; ?></a></li>
+		  <?php endif; ?>
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file name="catalog/controller/common/header.php">
+		<operation error="abort">
+			<search position="after">
+				<![CDATA[
+		$this->language->load('common/header');
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+		$this->language->load('article/article');
+		$this->data['text_article'] = $this->language->get('text_article');
+		if ($this->config->get('menubar') == '1') {
+			$this->data['article'] = $this->url->link('article/articles');
+		} else {
+			$this->data['article'] = '';
+		}
+
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file name="catalog/view/theme/*/template/common/header.tpl">
+		<operation error="abort">
+			<search position="before" index="2">
+				<![CDATA[
+		    </ul>
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+		<?php if ($article) { ?><li><a href="<?php echo $article; ?>"><?php echo $text_article; ?></a></li><?php } ?>
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file name="catalog/controller/common/seo_url.php">
+		<operation error="abort">
+			<search position="before" index="2">
+				<![CDATA[
+				} else {
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+					if ($url[0] == 'article_id') {
+						$this->request->get['article_id'] = $url[1];
+					}	
+				]]>
+			</add>
+		</operation>
+		<operation error="abort">
+			<search position="before" index="2">
+				<![CDATA[
+			if (isset($this->request->get['route'])) {
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+			  elseif ($this->request->get['_route_'] ==  'articles') { 
+            	$this->request->get['route'] =  'article/articles';
+			} elseif (isset($this->request->get['article_id'])) {
+				$this->request->get['route'] = 'article/article';
+			}
+				]]>
+			</add>
+		</operation>
+		<operation error="abort">
+			<search position="replace">
+				<![CDATA[
+			($data['route'] == 'information/information' && $key == 'information_id')) 
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+			($data['route'] == 'information/information' && $key == 'information_id') || ($data['route'] == 'article/article' && $key == 'article_id')) 
+				]]>
+			</add>
+		</operation>
+		<operation error="abort">
+			<search position="before">
+				<![CDATA[
+				} elseif ($key == 'path') {
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+				} elseif (isset($data['route']) && $data['route'] ==   'article/articles') { 
+            		$url .=  '/articles';
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file name="catalog/controller/information/sitemap.php">
+		<operation error="abort">
+			<search position="before">
+				<![CDATA[
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/information/sitemap.tpl')) {
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+		// Article
+		$this->data['text_article'] = $this->language->get('text_article');
+		$this->load->model('catalog/article');
+
+		$this->data['articles'] = array();
+
+		foreach ($this->model_catalog_article->getArticles() as $result) {
+			$this->data['articles'][] = array(
+				'title' => $result['title'],
+				'href'  => $this->url->link('article/article', 'article_id=' . $result['article_id'])
+			);
+		}
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file name="catalog/view/theme/*/template/information/sitemap.tpl">
+		<operation error="abort">
+			<search position="before">
+				<![CDATA[
+        <li><?php echo $text_information; ?>
+				]]>
+			</search>
+			<add>
+				<![CDATA[
+        <li><?php echo $text_article; ?>
+          <ul>
+            <?php foreach ($articles as $article) { ?>
+            <li><a href="<?php echo $article['href']; ?>"><?php echo $article['title']; ?></a></li>
+            <?php } ?>
+          </ul>
+        </li>
+				]]>
+			</add>
+		</operation>
+	</file>
+	<file name="catalog/language/*/information/sitemap.php">
+		<operation error="abort">
+			<search position="before">
+				<![CDATA[?>]]>
+			</search>
+			<add>
+				<![CDATA[$_['text_article']     = 'Article';]]>
+			</add>
+		</operation>
+	</file>
+</modification>

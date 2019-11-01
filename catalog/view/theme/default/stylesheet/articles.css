@@ -1,0 +1,10 @@
+@charset "utf-8";
+
+#tblArticles {
+	width:100%
+}
+#tblArticles td {
+	vertical-align:top;
+	text-align:left;
+	padding:0;
+}

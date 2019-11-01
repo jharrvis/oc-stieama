@@ -1,0 +1,12 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* backward compatibility of styles for versions of OpenCart 1.5.1.2 and earlier */
+a.button, .list a.button {
+    background:none #003A88;
+    border-radius: 10px 10px 10px 10px;
+    color: #FFFFFF;
+    display: inline-block;
+    padding: 5px 15px;
+    text-decoration: none;
+}
